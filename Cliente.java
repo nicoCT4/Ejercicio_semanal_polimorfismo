@@ -3,12 +3,12 @@ public class Cliente {
     private int carnet;
     private String nombre;
     private ArrayList<Documento> préstamos;
-    private int límitePréstamos;
+    private int Prestamos;
 
-    public Cliente(int carnet, String nombre, int límitePréstamos) {
+    public Cliente(int carnet, String nombre, int Prestamos) {
         this.carnet = carnet;
         this.nombre = nombre;
-        this.límitePréstamos = límitePréstamos;
+        this.Prestamos = Prestamos;
         this.préstamos = new ArrayList<>();
     }
 
@@ -25,18 +25,18 @@ public class Cliente {
         return préstamos;
     }
 
-    public int getLímitePréstamos() {
-        return límitePréstamos;
+    public int getPrestamos() {
+        return Prestamos;
     }
     public boolean puedeSolicitarMásPréstamos() {
-        return préstamos.size() < límitePréstamos;
+        return préstamos.size() < Prestamos;
     }
     public boolean solicitarPréstamo(Documento documento) {
-        if (préstamos.size() < límitePréstamos) {
+        if (préstamos.size() < Prestamos) {
             préstamos.add(documento);
             return true; // Préstamo exitoso
         } else {
-            return false; // Límite de préstamos alcanzado
+            return false; // Prestamos de préstamos alcanzado
         }
     }
 }

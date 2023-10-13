@@ -1,20 +1,20 @@
 public class Revista extends Documento {
-    private int año;
-    private int número;
+    private int anio;
+    private int numero;
 
-    public Revista(int id, String titulo, String materia, int cantidadEjemplares, Estado estado, int año, int número) {
+    public Revista(int id, String titulo, String materia, int cantidadEjemplares, Estado estado, int anio, int numero) {
         super(id, titulo, materia, cantidadEjemplares, estado);
-        this.año = año;
-        this.número = número;
+        this.anio = anio;
+        this.numero = numero;
     }
 
     // Métodos GET
-    public int getAño() {
-        return año;
+    public int getanio() {
+        return anio;
     }
 
-    public int getNúmero() {
-        return número;
+    public int getnumero() {
+        return numero;
     }
     // Implementación del método abstracto prestar
     public void prestar() {

@@ -12,7 +12,6 @@ public class Driver{
         Scanner sc = new Scanner(System.in);
         boolean go = true;
         String opcion = "";
-        String registro = "";
         Biblioteca biblioteca = new Biblioteca();
         int librosEnBiblioteca = biblioteca.contarLibros();
         int revistasEnBiblioteca = biblioteca.contarRevistas();
@@ -39,6 +38,18 @@ public class Driver{
         biblioteca.agregarDocumento(revista2);
         biblioteca.agregarDocumento(articulo1);
         biblioteca.agregarDocumento(articulo2);
+
+        // Crear clientes para la biblioteca
+
+        Cliente cliente1 = new Cliente(12345, "Juan Pérez", 4);
+        Cliente cliente2 = new Cliente(67890, "María García", 5);
+        Cliente cliente3 = new Cliente(54321, "Carlos Rodríguez", 1);
+
+        // Agregar los clientes a la lista de clientes
+        listaClientes.add(cliente1);
+        listaClientes.add(cliente2);
+        listaClientes.add(cliente3);
+
         
         while (go){
             printMenu();
@@ -46,7 +57,7 @@ public class Driver{
             System.out.println("");
 
             switch (opcion){
-                case "7":
+                case "1":
                     System.out.println("Ingrese su nombre: ");
                     String nombre = sc.nextLine();
                     System.out.println("Ingrese su carnet: ");
@@ -57,7 +68,7 @@ public class Driver{
                     listaClientes.add(cliente);
                     System.out.println("Cliente agregado con exito");
                     break;
-                case "1":
+                case "2":
                     System.out.println("Ingrese el tipo de documento que desea agregar: ");
                     System.out.println("1. Libro");
                     System.out.println("2. Revista");
@@ -129,17 +140,18 @@ public class Driver{
                     else{
                         System.out.println("Opcion invalida");
                     }
-                case "2":
+                case "3":
                     System.out.println("Ingrese el id del documento que desea devolver: ");
                     int id = sc.nextInt();
                     biblioteca.devolverDocumento(id);
+
                     break;
-                case "3":              
+                case "4":              
                 System.out.println("Libros en la biblioteca: " + librosEnBiblioteca);
                 System.out.println("Revistas en la biblioteca: " + revistasEnBiblioteca);
                 System.out.println("Artículos en la biblioteca: " + articulosEnBiblioteca);
                 break;
-                case "4":
+                case "5":
                 ArrayList<Libro> libros = biblioteca.obtenerLibros();
                 if (libros.isEmpty()) {
                     System.out.println("No hay libros en la biblioteca.");
@@ -153,9 +165,53 @@ public class Driver{
                     }
                 }
                 break;
-                case "5":
-            
                 case "6":
+                System.out.println("Ingrese el número de carnet del cliente: ");
+                int carnetCliente = sc.nextInt();
+            
+                // Buscar al cliente por su número de carnet en la lista de clientes
+                Cliente clienteEncontrado = null;
+                for (Cliente c : listaClientes) {
+                    if (c.getcarnet() == carnetCliente) {
+                        clienteEncontrado = c;
+                        break;
+                    }
+                }
+            
+                if (clienteEncontrado == null) {
+                    System.out.println("Cliente no encontrado.");
+                } else {
+                    System.out.println("Cliente encontrado: " + clienteEncontrado.getNombre());
+            
+                    // Verificar si el cliente puede realizar más préstamos (límite de 5)
+                    if (clienteEncontrado.getPréstamos().size() >= 5) {
+                        System.out.println("El cliente ha alcanzado el límite de 5 préstamos.");
+                    } else {
+                        System.out.println("El cliente puede realizar más préstamos.");
+                        System.out.println("Ingrese el ID del documento que desea pedir prestado: ");
+                        int idDocumento = sc.nextInt();
+            
+                        // Buscar el documento en la biblioteca
+                        Documento documentoPrestamo = biblioteca.buscarDocumentoPorID(idDocumento);
+            
+                        if (documentoPrestamo != null && documentoPrestamo.getEstado() == Documento.Estado.DISPONIBLE) {
+                            // Realizar el préstamo
+                            boolean préstamoExitoso = clienteEncontrado.solicitarPréstamo(documentoPrestamo);
+            
+                            if (préstamoExitoso) {
+                                documentoPrestamo.setEstado(Documento.Estado.PRESTADO);
+                                System.out.println("Préstamo exitoso. " + clienteEncontrado.getNombre() + " ha prestado el documento: " + documentoPrestamo.getTitulo());
+                            } else {
+                                System.out.println("Límite de préstamos alcanzado para el cliente.");
+                            }
+                        } else {
+                            System.out.println("Documento no encontrado o no disponible.");
+                        }
+                    }
+                }
+                break;
+            
+                case "7":
                     System.out.println("Gracias por usar la biblioteca UVG");
                     go = false;
                     break;
@@ -165,14 +221,14 @@ public class Driver{
 
     }
     public static void printMenu(){
-        System.out.println("Bienvenido a las opciones de la biblioteca UVG");
-        System.out.println("7. Porfavor presione el el numero 7 para regustrarse en la biblioteca y luego usar las diferentes opciones ");
-        System.out.println("1. Agregar un documento");
-        System.out.println("2. Devolver el tutulo de una publicacion cualquiera, dado su id");
-        System.out.println("3. Calcular la cantidad de documentos de las materias");
-        System.out.println("4. Mostrar la información (título, autor, materia) de todos los libros que posee la biblioteca.");
-        System.out.println("5. Pedir un documento, libro, articulo o revista prestado");
-        System.out.println("6. salir");
+        System.out.println("\nBienvenido a las opciones de la biblioteca UVG");
+        System.out.println("1. Registrarse si es un nuevo cliente ");
+        System.out.println("2. Agregar un documento");
+        System.out.println("3. Devolver el titulo de una publicacion cualquiera, dado su id");
+        System.out.println("4. Calcular la cantidad de documentos de las materias");
+        System.out.println("5. Mostrar la información (título, autor, materia) de todos los libros que posee la biblioteca.");
+        System.out.println("6. Pedir un documento, libro, articulo o revista prestado");
+        System.out.println("7. salir");
         System.out.println("\nIngrese el numero de la opcion que desea realizar: ");
     }
 }
