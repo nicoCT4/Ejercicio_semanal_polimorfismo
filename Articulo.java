@@ -20,6 +20,5 @@ public class Articulo extends Documento {
 
     // Implementación del método abstracto prestar
     public void prestar() {
-        // Implementación específica para prestar un artículo
     }
 }

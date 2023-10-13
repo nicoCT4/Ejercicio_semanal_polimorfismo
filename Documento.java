@@ -39,6 +39,33 @@ public abstract class Documento {
         return estado;
     }
 
+    
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
+    public void setCantidadEjemplares(int cantidadEjemplares) {
+        this.cantidadEjemplares = cantidadEjemplares;
+    }
     // Método abstracto
-    public abstract void prestar();
+    public abstract void prestar();{
+    if (getEstado() == Estado.DISPONIBLE && getCantidadEjemplares() > 0) {
+        setEstado(Estado.AGOTADO);
+        setCantidadEjemplares(getCantidadEjemplares() - 1);
+        System.out.println("Revista prestada exitosamente.");
+    } else {
+        System.out.println("La revista no está disponible para préstamo.");
+    }
+    }
+    // Nuevo campo para almacenar al cliente que tiene el documento prestado
+    protected Cliente clientePrestamo;
+
+    // Constructor y métodos existentes
+
+    public Cliente getClientePrestamo() {
+        return clientePrestamo;
+    }
+
+    public void setClientePrestamo(Cliente cliente) {
+        this.clientePrestamo = cliente;
+    }
 }

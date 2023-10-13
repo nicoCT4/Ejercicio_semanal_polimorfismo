@@ -1,30 +1,24 @@
 import java.util.ArrayList;
 public class Cliente {
-    private int númeroIdentidad;
+    private int carnet;
     private String nombre;
-    private String dirección;
     private ArrayList<Documento> préstamos;
     private int límitePréstamos;
 
-    public Cliente(int númeroIdentidad, String nombre, String dirección, int límitePréstamos) {
-        this.númeroIdentidad = númeroIdentidad;
+    public Cliente(int carnet, String nombre, int límitePréstamos) {
+        this.carnet = carnet;
         this.nombre = nombre;
-        this.dirección = dirección;
         this.límitePréstamos = límitePréstamos;
         this.préstamos = new ArrayList<>();
     }
 
     // Métodos GET
-    public int getNúmeroIdentidad() {
-        return númeroIdentidad;
+    public int getcarnet() {
+        return carnet;
     }
 
     public String getNombre() {
         return nombre;
-    }
-
-    public String getDirección() {
-        return dirección;
     }
 
     public ArrayList<Documento> getPréstamos() {
